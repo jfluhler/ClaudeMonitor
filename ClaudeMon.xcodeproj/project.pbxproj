@@ -237,7 +237,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jfluhler.claudemonitor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.claudemonitor;
 				PRODUCT_NAME = ClaudeMonitor;
 				SDKROOT = macosx;
 			};
@@ -260,7 +260,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jfluhler.claudemonitor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.claudemonitor;
 				PRODUCT_NAME = ClaudeMonitor;
 				SDKROOT = macosx;
 			};

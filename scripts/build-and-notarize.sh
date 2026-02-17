@@ -17,7 +17,7 @@ PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 ARCHIVE_PATH="$PROJECT_DIR/build/ClaudeMonitor.xcarchive"
 EXPORT_DIR="$PROJECT_DIR/build/export"
 KEYCHAIN_PROFILE="ClaudeMonitor-notarize"
-TEAM_ID="T58N9R3B7C"
+TEAM_ID="${TEAM_ID:?Set TEAM_ID env var to your Apple Developer Team ID}"
 
 # Verify Developer ID cert exists
 if ! security find-identity -v -p codesigning | grep -q "Developer ID Application"; then

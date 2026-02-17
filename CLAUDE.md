@@ -26,7 +26,7 @@ The app requires macOS 14.0+ and uses "Sign to Run Locally" for development buil
 
 ## Notarization
 
-Requires a Developer ID Application certificate and stored notarytool credentials. See `scripts/build-and-notarize.sh` header for one-time setup steps. Team ID: `J5RUB49AW6`. Bundle ID: `com.jfluhler.claudemonitor`.
+Requires a Developer ID Application certificate and stored notarytool credentials. See `scripts/build-and-notarize.sh` header for one-time setup steps. Set `TEAM_ID` env var and update `ExportOptions.plist` and `project.yml` bundle ID before building.
 
 ## Architecture
 
