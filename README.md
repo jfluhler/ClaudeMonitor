@@ -1,0 +1,123 @@
+# ClaudeMonitor
+
+A macOS menu bar app that displays your Claude AI subscription usage limits in real time.
+
+![macOS 14+](https://img.shields.io/badge/macOS-14%2B-blue) ![Swift](https://img.shields.io/badge/Swift-5.9-orange) ![License](https://img.shields.io/badge/license-MIT-green)
+
+## What It Does
+
+ClaudeMonitor sits in your menu bar and shows how much of your Claude usage allowance you've consumed. It tracks three metrics:
+
+- **Session usage (5-hour window)** — displayed as a colored circular gauge in the menu bar
+- **Weekly usage (7-day window)** — shown as a progress bar in the dropdown panel
+- **Opus weekly usage (7-day window)** — shown when available
+
+Click the menu bar icon to see a detailed breakdown with live countdown timers showing when each limit resets. The app also records daily peak usage over time and shows 30-day and yearly trends via built-in charts.
+
+## How It Works
+
+ClaudeMonitor reads the OAuth token that **Claude Code** (the CLI tool) stores in your macOS Keychain, then polls an internal Anthropic usage endpoint to retrieve your current utilization percentages.
+
+### Authentication Flow
+
+1. You log in to Claude Code in your terminal (`claude login`)
+2. Claude Code stores an OAuth token in the macOS Keychain under the service name `Claude Code-credentials`
+3. ClaudeMonitor reads that token using the macOS Security framework (no shell commands)
+4. The token is used to call `GET https://api.anthropic.com/api/oauth/usage` with the appropriate headers
+
+### Requirements
+
+- **macOS 14.0 (Sonoma)** or later
+- **Claude Code** installed and logged in — run `claude login` if you haven't already
+- Claude Desktop alone is **not sufficient** — the OAuth token is created by Claude Code specifically
+
+### Features
+
+- Color-coded menu bar icon (green/yellow/red) that fills based on session usage
+- Pulsing icon animation when the session limit is reached (100%)
+- Optional percentage text next to the menu bar icon
+- Live countdown timers that update every second (without extra API calls)
+- Configurable poll interval (30–300 seconds, default 60s)
+- macOS notifications when session usage exceeds 80%
+- Long-term usage history with 30-day and yearly charts (Swift Charts)
+- Launch at login support
+- Help view explaining setup requirements
+- Disconnected/onboarding state when credentials are missing
+
+## Building From Source
+
+### Prerequisites
+
+- Xcode 15+
+- [xcodegen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
+
+### Development Build
+
+```bash
+xcodegen generate
+open ClaudeMon.xcodeproj
+# Hit Cmd+R in Xcode
+```
+
+Or from the command line:
+
+```bash
+xcodegen generate
+xcodebuild -project ClaudeMon.xcodeproj -scheme ClaudeMon -configuration Debug build
+```
+
+### Notarized Release Build
+
+Requires a Developer ID Application certificate and App Store Connect API key credentials stored for `notarytool`. See the header of `scripts/build-and-notarize.sh` for one-time setup steps.
+
+```bash
+./scripts/build-and-notarize.sh
+```
+
+This archives, exports, notarizes, staples, and outputs a distributable `.app` and `.dmg`.
+
+## Project Structure
+
+```
+ClaudeMon/
+├── ClaudeMonApp.swift              # App entry point (MenuBarExtra + Settings)
+├── Models/
+│   ├── UsageData.swift             # API response types
+│   └── UsageHistory.swift          # Daily usage record types
+├── Services/
+│   ├── KeychainService.swift       # Reads OAuth token from Keychain
+│   ├── APIService.swift            # Calls the Anthropic usage endpoint
+│   ├── UsageHistoryService.swift   # Persists daily peak usage to disk
+│   └── NotificationService.swift   # 80% threshold notifications
+├── ViewModels/
+│   └── UsageViewModel.swift        # Central state, timers, settings
+└── Views/
+    ├── MenuBarIconView.swift       # Colored circular gauge in menu bar
+    ├── UsagePanelView.swift        # Main dropdown panel
+    ├── SessionUsageView.swift      # Circular progress ring
+    ├── UsageBarView.swift          # Horizontal progress bar
+    ├── HistoryView.swift           # Swift Charts history view
+    ├── SettingsView.swift          # Preferences window
+    ├── OnboardingView.swift        # Shown when not connected
+    └── HelpView.swift              # Setup requirements explainer
+```
+
+## Disclaimer
+
+**This software is provided "as is", without warranty of any kind.**
+
+ClaudeMonitor uses an **undocumented, internal Anthropic API endpoint** (`/api/oauth/usage`) that is not part of any official public API. This endpoint is used internally by Claude Code and was discovered through observation of its network behavior.
+
+**Important considerations:**
+
+- This endpoint may change, break, or be removed at any time without notice.
+- The use of this endpoint may currently or in the future violate Anthropic's [Terms of Service](https://www.anthropic.com/terms), [Acceptable Use Policy](https://www.anthropic.com/aup), or other agreements governing your use of Claude products.
+- This project is not affiliated with, endorsed by, or sponsored by Anthropic.
+- The developers of this project make no representations about the legality or permissibility of accessing this endpoint.
+- **Use this software at your own discretion and at your own risk.** You are solely responsible for ensuring your use complies with all applicable terms and agreements.
+
+By using this software, you acknowledge that you understand and accept these risks.
+
+## License
+
+MIT License. See above disclaimer regarding the use of undocumented APIs.

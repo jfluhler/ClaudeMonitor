@@ -1,0 +1,14 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserdata
+*.xcworkspace
+!*.xcodeproj/project.pbxproj
+xcuserdata/
+
+# macOS
+.DS_Store
+
+# SwiftPM
+.build/
+Package.resolved
