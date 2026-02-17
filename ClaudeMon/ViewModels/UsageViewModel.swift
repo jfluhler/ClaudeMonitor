@@ -18,7 +18,7 @@ final class UsageViewModel: ObservableObject {
 
     // MARK: - Settings
 
-    @AppStorage("pollInterval") var pollInterval: Double = 60
+    @AppStorage("pollInterval") var pollInterval: Double = 300
     @AppStorage("showPercentageInMenuBar") var showPercentageInMenuBar: Bool = false
     @AppStorage("launchAtLogin") var launchAtLogin: Bool = false
     @AppStorage("notifyAt80Percent") var notifyAt80Percent: Bool = true

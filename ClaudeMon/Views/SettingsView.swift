@@ -7,16 +7,14 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("Polling") {
-                HStack {
-                    Text("Refresh every \(Int(viewModel.pollInterval))s")
-                    Spacer()
-                    Slider(value: $viewModel.pollInterval, in: 30...300, step: 10) {
-                        Text("Poll Interval")
-                    }
-                    .frame(width: 200)
-                    .onChange(of: viewModel.pollInterval) { _, _ in
-                        viewModel.startPolling()
-                    }
+                Picker("Refresh every", selection: $viewModel.pollInterval) {
+                    Text("5 minutes").tag(300.0)
+                    Text("15 minutes").tag(900.0)
+                    Text("30 minutes").tag(1800.0)
+                    Text("60 minutes").tag(3600.0)
+                }
+                .onChange(of: viewModel.pollInterval) { _, _ in
+                    viewModel.startPolling()
                 }
             }
 
