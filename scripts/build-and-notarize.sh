@@ -32,6 +32,24 @@ fi
 echo "==> Cleaning..."
 rm -rf "$PROJECT_DIR/build"
 
+# Generate ExportOptions.plist with the correct team ID
+EXPORT_PLIST="$PROJECT_DIR/build/ExportOptions.plist"
+mkdir -p "$PROJECT_DIR/build"
+cat > "$EXPORT_PLIST" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>method</key>
+	<string>developer-id</string>
+	<key>teamID</key>
+	<string>${TEAM_ID}</string>
+	<key>signingStyle</key>
+	<string>automatic</string>
+</dict>
+</plist>
+PLIST
+
 echo "==> Archiving..."
 xcodebuild archive \
   -project "$PROJECT_DIR/ClaudeMon.xcodeproj" \
@@ -49,7 +67,7 @@ echo "==> Exporting..."
 xcodebuild -exportArchive \
   -archivePath "$ARCHIVE_PATH" \
   -exportPath "$EXPORT_DIR" \
-  -exportOptionsPlist "$PROJECT_DIR/ExportOptions.plist" \
+  -exportOptionsPlist "$EXPORT_PLIST" \
   | tail -5
 
 APP_PATH="$EXPORT_DIR/ClaudeMonitor.app"

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <clipPath id="iconMask">
+      <rect x="0" y="0" width="1024" height="1024" rx="228" ry="228"/>
+    </clipPath>
+    
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0d0d1a"/>
+    </linearGradient>
+
+    <!-- Subtle radial glow behind the letters -->
+    <radialGradient id="centerGlow" cx="0.5" cy="0.5" r="0.45">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Claude star glow -->
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <g clip-path="url(#iconMask)">
+    <!-- Background -->
+    <rect width="1024" height="1024" fill="url(#bgGrad)"/>
+    <rect width="1024" height="1024" fill="url(#centerGlow)"/>
+    
+    <!-- C letter - orange, positioned left, large and bold -->
+    <text x="310" y="660" text-anchor="middle" 
+          font-family="-apple-system, SF Pro Display, Helvetica Neue, sans-serif" 
+          font-size="620" font-weight="700" fill="#F97316">
+      C
+    </text>
+    
+    <!-- M letter - red, positioned right, slightly overlapping -->
+    <text x="680" y="660" text-anchor="middle" 
+          font-family="-apple-system, SF Pro Display, Helvetica Neue, sans-serif" 
+          font-size="620" font-weight="700" fill="#DC2626">
+      M
+    </text>
+    
+    <!-- Claude-style sparkle/star sitting inside the opening of the C -->
+    <!-- 4-pointed star with elongated vertical points (Claude's signature shape) -->
+    <g transform="translate(355, 480)" filter="url(#starGlow)">
+      <path d="
+        M 0,-52
+        C 3,-18  18,-3  52,0
+        C 18,3   3,18   0,52
+        C -3,18  -18,3  -52,0
+        C -18,-3 -3,-18 0,-52
+        Z
+      " fill="#F5DEB3" opacity="0.95"/>
+      
+      <!-- Tiny inner highlight on the star -->
+      <circle cx="0" cy="0" r="8" fill="#ffffff" opacity="0.6"/>
+    </g>
+    
+  </g>
+</svg>
