@@ -151,12 +151,23 @@ struct UsagePanelView: View {
         }
     }
 
+    private var appVersion: String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
+        return "v\(version) (\(build))"
+    }
+
     private var footerView: some View {
         HStack {
-            if let lastRefreshed = viewModel.lastRefreshed {
-                Text("Updated \(lastRefreshed, style: .time)")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 1) {
+                if let lastRefreshed = viewModel.lastRefreshed {
+                    Text("Updated \(lastRefreshed, style: .time)")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+                Text(appVersion)
+                    .font(.system(size: 9))
+                    .foregroundStyle(.tertiary)
             }
 
             Spacer()

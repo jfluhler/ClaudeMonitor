@@ -44,8 +44,24 @@ struct SettingsView: View {
                         }
                     }
             }
+
+            Section {
+                HStack {
+                    Text("ClaudeMonitor")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(appVersion)
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
         .formStyle(.grouped)
         .frame(width: 420, height: 320)
+    }
+
+    private var appVersion: String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
+        return "v\(version) (\(build))"
     }
 }
