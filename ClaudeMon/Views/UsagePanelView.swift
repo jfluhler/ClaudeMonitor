@@ -181,7 +181,14 @@ struct UsagePanelView: View {
             .buttonStyle(.borderless)
             .help("Refresh now")
 
-            SettingsLink {
+            Button {
+                NSApp.activate(ignoringOtherApps: true)
+                if #available(macOS 14, *) {
+                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                } else {
+                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                }
+            } label: {
                 Image(systemName: "gear")
                     .font(.caption)
             }

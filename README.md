@@ -16,6 +16,12 @@ ClaudeMonitor sits in your menu bar and shows how much of your Claude usage allo
 
 Click the menu bar icon to see a detailed breakdown with live countdown timers showing when each limit resets. The app also records daily peak usage over time and shows 30-day and yearly trends via built-in charts.
 
+<p align="center">
+  <img src="screenshots/current-usage.png" width="300" alt="Current usage panel" />
+  &nbsp;&nbsp;
+  <img src="screenshots/history.png" width="300" alt="History view" />
+</p>
+
 ## How It Works
 
 ClaudeMonitor reads the OAuth token that **Claude Code** (the CLI tool) stores in your macOS Keychain, then polls an internal Anthropic usage endpoint to retrieve your current utilization percentages.

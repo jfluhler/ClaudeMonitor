@@ -56,7 +56,8 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 420, height: 320)
+        .scrollDisabled(true)
+        .frame(width: 380, height: 260)
     }
 
     private var appVersion: String {
