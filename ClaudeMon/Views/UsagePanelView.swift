@@ -2,6 +2,7 @@ import SwiftUI
 
 struct UsagePanelView: View {
     @ObservedObject var viewModel: UsageViewModel
+    @Environment(\.openSettings) private var openSettings
     @State private var selectedTab = 0
     @State private var showingHelp = false
 
@@ -182,11 +183,9 @@ struct UsagePanelView: View {
             .help("Refresh now")
 
             Button {
-                NSApp.activate(ignoringOtherApps: true)
-                if #available(macOS 14, *) {
-                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                } else {
-                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                openSettings()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    NSApp.activate(ignoringOtherApps: true)
                 }
             } label: {
                 Image(systemName: "gear")
